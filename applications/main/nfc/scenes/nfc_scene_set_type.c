@@ -30,7 +30,8 @@ void nfc_scene_set_type_on_enter(void* context) {
         ++generator, ++i) {
         submenu_add_item(submenu, (*generator)->name, i, nfc_scene_set_type_submenu_callback, nfc);
     }
-
+    submenu_set_selected_item(
+        nfc->submenu, scene_manager_get_scene_state(nfc->scene_manager, NfcSceneSetType));
     view_dispatcher_switch_to_view(nfc->view_dispatcher, NfcViewMenu);
 }
 
@@ -39,6 +40,7 @@ bool nfc_scene_set_type_on_event(void* context, SceneManagerEvent event) {
     bool consumed = false;
 
     if(event.type == SceneManagerEventTypeCustom) {
+	scene_manager_set_scene_state(nfc->scene_manager, NfcSceneSetType, event.event);
         if(event.event == SubmenuIndexNFCA7) {
             nfc->dev->dev_data.nfc_data.uid_len = 7;
             nfc->dev->format = NfcDeviceSaveFormatUid;
@@ -57,6 +59,7 @@ bool nfc_scene_set_type_on_event(void* context, SceneManagerEvent event) {
             scene_manager_next_scene(nfc->scene_manager, NfcSceneGenerateInfo);
             consumed = true;
         }
+	
     }
     return consumed;
 }
