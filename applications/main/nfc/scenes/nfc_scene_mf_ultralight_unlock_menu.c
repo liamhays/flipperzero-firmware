@@ -19,14 +19,6 @@ void nfc_scene_mf_ultralight_unlock_menu_on_enter(void* context) {
 
     uint32_t state =
         scene_manager_get_scene_state(nfc->scene_manager, NfcSceneMfUltralightUnlockMenu);
-    if(nfc->dev->dev_data.protocol == NfcDeviceProtocolMifareUl) {
-        submenu_add_item(
-            submenu,
-            "Unlock With Reader",
-            SubmenuIndexMfUlUnlockMenuAuto,
-            nfc_scene_mf_ultralight_unlock_menu_submenu_callback,
-            nfc);
-    }
     submenu_add_item(
         submenu,
         "Auth As Ameebo",
@@ -66,10 +58,10 @@ bool nfc_scene_mf_ultralight_unlock_menu_on_event(void* context, SceneManagerEve
             nfc->dev->dev_data.mf_ul_data.auth_method = MfUltralightAuthMethodXiaomi;
             scene_manager_next_scene(nfc->scene_manager, NfcSceneMfUltralightUnlockWarn);
             consumed = true;
-        } else if(event.event == SubmenuIndexMfUlUnlockMenuAuto) {
+        } /*else if(event.event == SubmenuIndexMfUlUnlockMenuAuto) {
             scene_manager_next_scene(nfc->scene_manager, NfcSceneMfUltralightUnlockAuto);
             consumed = true;
-        }
+	    }*/
         scene_manager_set_scene_state(
             nfc->scene_manager, NfcSceneMfUltralightUnlockMenu, event.event);
     }
