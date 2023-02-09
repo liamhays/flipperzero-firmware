@@ -1,7 +1,6 @@
 #include "../nfc_i.h"
 
 enum SubmenuIndex {
-    SubmenuIndexMfUlUnlockMenuAuto,
     SubmenuIndexMfUlUnlockMenuAmeebo,
     SubmenuIndexMfUlUnlockMenuXiaomi,
     SubmenuIndexMfUlUnlockMenuManual,
@@ -58,10 +57,7 @@ bool nfc_scene_mf_ultralight_unlock_menu_on_event(void* context, SceneManagerEve
             nfc->dev->dev_data.mf_ul_data.auth_method = MfUltralightAuthMethodXiaomi;
             scene_manager_next_scene(nfc->scene_manager, NfcSceneMfUltralightUnlockWarn);
             consumed = true;
-        } /*else if(event.event == SubmenuIndexMfUlUnlockMenuAuto) {
-            scene_manager_next_scene(nfc->scene_manager, NfcSceneMfUltralightUnlockAuto);
-            consumed = true;
-	    }*/
+        }
         scene_manager_set_scene_state(
             nfc->scene_manager, NfcSceneMfUltralightUnlockMenu, event.event);
     }
